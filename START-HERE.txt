@@ -1,0 +1,48 @@
+===========================================
+HOW TO START THE SERVER
+===========================================
+
+METHOD 1: EASIEST - Double-click start.bat
+-------------------------------------------
+1. Open File Explorer
+2. Navigate to: c:\Users\Udayan Thakur\Videos\web
+3. Double-click "start.bat"
+4. Wait for server to start
+5. Open browser to: http://localhost:3000
+
+METHOD 2: Use Command Prompt (NOT PowerShell)
+-----------------------------------------------
+1. Press Win + R
+2. Type: cmd
+3. Press Enter
+4. Type: cd "c:\Users\Udayan Thakur\Videos\web"
+5. Press Enter
+6. Type: npm install
+7. Press Enter (wait for installation)
+8. Type: npm start
+9. Press Enter
+10. Open browser to: http://localhost:3000
+
+METHOD 3: Fix PowerShell (Advanced)
+------------------------------------
+Run PowerShell as Administrator, then type:
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+Then you can use npm commands in PowerShell.
+
+===========================================
+TROUBLESHOOTING
+===========================================
+
+If you see "npm is not recognized":
+- Node.js is not installed
+- Download from: https://nodejs.org/
+- Install it, then restart your terminal
+
+If you see execution policy errors:
+- Use Command Prompt instead of PowerShell
+- OR use the start.bat file
+
+===========================================
+
+

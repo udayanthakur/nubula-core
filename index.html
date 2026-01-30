@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nebula Core – Web3 Hosting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="page-gradient"></div>
+  <header class="site-header">
+    <div class="logo">
+      <span class="logo-mark"></span>
+      <span class="logo-text">Nebula Core</span>
+    </div>
+
+    <nav class="nav-links">
+      <a href="#home" class="nav-link active">Home</a>
+      <a href="#solutions" class="nav-link">Solutions</a>
+      <a href="#pricing" class="nav-link">Pricing</a>
+      <a href="#resources" class="nav-link">Resources</a>
+    </nav>
+
+    <div class="nav-actions">
+      <!-- Guest Navigation -->
+      <div id="guestNav">
+        <a href="login.html" class="btn ghost">Login</a>
+        <a href="signup.html" class="btn primary">Sign up</a>
+      </div>
+      <!-- Logged-in User Navigation -->
+      <div id="userNav" style="display: none;">
+        <a href="dashboard.html" class="btn ghost">Dashboard</a>
+        <button onclick="handleLogout()" class="btn primary">Sign out</button>
+      </div>
+      <button class="menu-toggle" aria-label="Open menu" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="sidebar-content">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <span class="logo-mark"></span>
+          <span class="logo-text">Nebula Core</span>
+        </div>
+        <button class="sidebar-close" id="sidebarClose" aria-label="Close menu">
+          <span>×</span>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#home" class="sidebar-link" data-section="home">
+          <span class="sidebar-link-icon">🏠</span>
+          <span>Home</span>
+        </a>
+        <a href="#solutions" class="sidebar-link" data-section="solutions">
+          <span class="sidebar-link-icon">⚡</span>
+          <span>Solutions</span>
+        </a>
+        <a href="#pricing" class="sidebar-link" data-section="pricing">
+          <span class="sidebar-link-icon">💰</span>
+          <span>Pricing</span>
+        </a>
+        <a href="#resources" class="sidebar-link" data-section="resources">
+          <span class="sidebar-link-icon">📚</span>
+          <span>Resources</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-actions">
+          <!-- Guest Sidebar Actions -->
+          <div id="guestSidebarNav">
+            <a href="signup.html" class="btn red-purple wide">Get Started</a>
+            <a href="login.html" class="btn outline wide">Login</a>
+          </div>
+          <!-- Logged-in Sidebar Actions -->
+          <div id="userSidebarNav" style="display: none;">
+            <a href="dashboard.html" class="btn red-purple wide">Dashboard</a>
+            <button onclick="handleLogout()" class="btn outline wide">Sign out</button>
+          </div>
+        </div>
+        <div class="sidebar-info">
+          <p>Need help? <a href="#">Contact Support</a></p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="hero" id="home">
+    <section class="hero-content">
+      <div class="pill">
+        <span class="pill-badge">New</span>
+        <span class="pill-label">Introducing our new most advanced Web3 hosting</span>
+      </div>
+
+      <h1 class="hero-title">
+        Build on<br />
+        decentralized<br />
+        crypto protocol
+      </h1>
+
+      <p class="hero-subtitle">
+        Nebula Core is a leading provider of cutting-edge decentralized solutions, powering
+        the next generation of NFT, GameFi, and Metaverse projects.
+      </p>
+
+      <div class="hero-cta">
+        <button class="btn cta">
+          <span>Schedule demo</span>
+          <span class="btn-icon">↗</span>
+        </button>
+        <span class="cta-note">No credit card required</span>
+      </div>
+    </section>
+
+    <section class="hero-visual" aria-hidden="true">
+      <div class="cube-grid">
+        <div class="cube cube-1"></div>
+        <div class="cube cube-2"></div>
+        <div class="cube cube-3"></div>
+        <div class="cube cube-4"></div>
+        <div class="cube cube-5"></div>
+        <div class="cube cube-6"></div>
+      </div>
+    </section>
+
+    <button class="scroll-down" aria-label="Scroll down"
+      onclick="document.getElementById('solutions').scrollIntoView({ behavior: 'smooth' })">
+      <span class="scroll-icon">⌄</span>
+    </button>
+  </main>
+
+  <section class="section" id="solutions">
+    <div class="section-inner">
+      <header class="section-header">
+        <h2>Solutions for every Web3 project</h2>
+        <p>
+          From NFT drops to full‑scale Metaverse experiences, pick the stack that fits your
+          protocol and we’ll handle the rest.
+        </p>
+      </header>
+
+      <div class="card-grid">
+        <article class="card gradient-card">
+          <h3>NFT &amp; digital assets</h3>
+          <p>
+            Launch collections, loyalty passes, and token‑gated content on top of battle‑tested
+            contracts.
+          </p>
+          <ul>
+            <li>ERC‑721/1155 templates audited by third parties</li>
+            <li>Lazy minting and allowlist tooling</li>
+            <li>Real‑time drop analytics dashboard</li>
+          </ul>
+          <button class="btn red-purple">Explore NFT solutions</button>
+        </article>
+        <article class="card gradient-card">
+          <h3>GameFi orchestration</h3>
+          <p>
+            Power in‑game economies, rewards, and on‑chain inventories without slowing players
+            down.
+          </p>
+          <ul>
+            <li>SDKs for Unity, Unreal, and web games</li>
+            <li>Non‑custodial wallet onboarding in seconds</li>
+            <li>Scalable matchmaking &amp; leaderboard APIs</li>
+          </ul>
+          <button class="btn red-purple">View GameFi stack</button>
+        </article>
+        <article class="card gradient-card">
+          <h3>Metaverse fabrics</h3>
+          <p>
+            Stitch identity, payments, and presence into immersive worlds that feel truly live.
+          </p>
+          <ul>
+            <li>Cross‑world identity and profile services</li>
+            <li>On‑chain ticketing and subscriptions</li>
+            <li>Streaming‑grade observability and metrics</li>
+          </ul>
+          <button class="btn red-purple">Build your world</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="pricing">
+    <div class="section-inner">
+      <header class="section-header">
+        <h2>Predictable, scalable pricing</h2>
+        <p>Start free, scale only when your protocol does. No lock‑in, no surprises.</p>
+      </header>
+
+      <div class="pricing-grid">
+        <article class="pricing-card">
+          <div class="pricing-pill">Starter</div>
+          <h3>Free</h3>
+          <p class="pricing-note">For experiments & hackathons.</p>
+          <ul>
+            <li>Up to 50k requests / month</li>
+            <li>Shared compute</li>
+            <li>Email support</li>
+          </ul>
+          <button class="btn red-purple wide">Start for free</button>
+        </article>
+
+        <article class="pricing-card featured">
+          <div class="pricing-pill hot">Teams’ choice</div>
+          <h3><span class="price-number">$199</span><span class="price-unit">/mo</span></h3>
+          <p class="pricing-note">For production‑grade protocols.</p>
+          <ul>
+            <li>Up to 10M requests / month</li>
+            <li>Dedicated clusters</li>
+            <li>24/7 priority support</li>
+          </ul>
+          <button class="btn red-purple wide">Talk to sales</button>
+        </article>
+
+        <article class="pricing-card">
+          <div class="pricing-pill">Enterprise</div>
+          <h3>Let’s talk</h3>
+          <p class="pricing-note">Custom SLAs, regions, and compliance.</p>
+          <ul>
+            <li>Unlimited throughput</li>
+            <li>Private shards</li>
+            <li>Dedicated success engineer</li>
+          </ul>
+          <button class="btn outline wide">Contact us</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="resources">
+    <div class="section-inner">
+      <header class="section-header">
+        <h2>Resources to ship faster</h2>
+        <p>Curated documentation, starter kits, and live examples to get you production‑ready.</p>
+      </header>
+
+      <div class="resource-pills">
+        <button class="pill-chip red-purple-chip">Docs</button>
+        <button class="pill-chip red-purple-chip">Starter kits</button>
+        <button class="pill-chip red-purple-chip">API explorer</button>
+        <button class="pill-chip red-purple-chip">Status</button>
+      </div>
+    </div>
+  </section>
+
+  <script src="main.js"></script>
+  <script>
+    // Check auth status and update navigation
+    async function updateNavForAuth() {
+      const token = localStorage.getItem('token');
+      const guestNav = document.getElementById('guestNav');
+      const userNav = document.getElementById('userNav');
+      const guestSidebarNav = document.getElementById('guestSidebarNav');
+      const userSidebarNav = document.getElementById('userSidebarNav');
+
+      if (token) {
+        try {
+          const response = await fetch(`/api/auth/verify?token=${token}`);
+          const data = await response.json();
+
+          if (data.valid) {
+            // Show logged-in navigation
+            if (guestNav) guestNav.style.display = 'none';
+            if (userNav) userNav.style.display = 'flex';
+            if (guestSidebarNav) guestSidebarNav.style.display = 'none';
+            if (userSidebarNav) userSidebarNav.style.display = 'block';
+            return;
+          }
+        } catch (error) {
+          console.log('Auth check failed:', error);
+        }
+        // Token invalid, remove it
+        localStorage.removeItem('token');
+      }
+
+      // Show guest navigation (default)
+      if (guestNav) guestNav.style.display = 'flex';
+      if (userNav) userNav.style.display = 'none';
+      if (guestSidebarNav) guestSidebarNav.style.display = 'block';
+      if (userSidebarNav) userSidebarNav.style.display = 'none';
+    }
+
+    async function handleLogout() {
+      const token = localStorage.getItem('token');
+      try {
+        await fetch('/api/auth/logout', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+      } catch (error) {
+        console.error('Logout error:', error);
+      }
+      localStorage.removeItem('token');
+      window.location.href = 'login.html';
+    }
+
+    // Run on page load
+    document.addEventListener('DOMContentLoaded', updateNavForAuth);
+  </script>
+</body>
+
+</html>
