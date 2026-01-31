@@ -1,5 +1,11 @@
 # Nebula Core - Web3 Hosting Platform
 
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/udayanthakur/nubula-core)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Open Source](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/udayanthakur/nubula-core)
+
+> 🚀 **[View Repository](https://github.com/udayanthakur/nubula-core)** | 📖 **[Documentation](#installation)**
+
 A modern, responsive landing page with authentication system for decentralized Web3 hosting services.
 
 ## Features
@@ -11,6 +17,7 @@ A modern, responsive landing page with authentication system for decentralized W
 - 🚀 Express.js backend API
 - ✨ 3D interactive elements and animations
 - 🎯 Smooth scroll animations and transitions
+
 
 ## Tech Stack
 
