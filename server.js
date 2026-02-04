@@ -3,8 +3,14 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 
+// Security middleware
+const { firewall } = require('./middleware/firewall');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Security layer (first - before all other middleware)
+app.use(firewall);
 
 // Middleware
 app.use(cors());
