@@ -1,340 +1,835 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard – Nebula Core</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="auth.css" />
-    <style>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard – Nebula Core</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="auth.css" />
+  <style>
+    .dashboard-container {
+      min-height: 100vh;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 100px;
+      gap: 2rem;
+    }
+
+    .dashboard-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      padding: 2rem;
+      max-width: 900px;
+      width: 100%;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .dashboard-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .welcome-title {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #a855f7, #6366f1, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .welcome-subtitle {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 1rem;
+    }
+
+    .user-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #a855f7, #6366f1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 700;
+      color: white;
+      margin: 0 auto 1rem;
+      box-shadow: 0 10px 40px rgba(168, 85, 247, 0.3);
+    }
+
+    .profile-info {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .info-value {
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 600;
+    }
+
+    .dashboard-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .dashboard-btn {
+      flex: 1;
+      min-width: 120px;
+      padding: 0.875rem 1.25rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #a855f7, #6366f1);
+      border: none;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #ef4444;
+    }
+
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.2);
+    }
+
+    .btn-web3 {
+      background: linear-gradient(135deg, #22d3ee, #6366f1);
+      border: none;
+      color: white;
+    }
+
+    .btn-web3:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(34, 211, 238, 0.4);
+    }
+
+    .loading-state {
+      text-align: center;
+      padding: 2rem;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-top-color: #a855f7;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.25rem 0.75rem;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #22c55e;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      background: #22c55e;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    /* ===== Web3 Portfolio Section ===== */
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .portfolio-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .portfolio-value {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #fff, #22d3ee);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .wallet-connect-btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #22d3ee, #6366f1);
+      border: none;
+      color: white;
+    }
+
+    .wallet-connect-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(34, 211, 238, 0.4);
+    }
+
+    .wallet-connect-btn.connected {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #22c55e;
+    }
+
+    .wallet-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      animation: pulse 2s infinite;
+    }
+
+    .chains-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 1rem;
+    }
+
+    .chain-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 1.25rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .chain-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(168, 85, 247, 0.5);
+      background: rgba(255, 255, 255, 0.04);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .chain-card.active {
+      border-color: #a855f7;
+      background: rgba(168, 85, 247, 0.1);
+    }
+
+    .chain-icon {
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .chain-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 0.5rem;
+    }
+
+    .chain-balance {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .chain-balance .amount {
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .not-connected-msg {
+      text-align: center;
+      padding: 2rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .not-connected-msg .icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    .quick-actions-row {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      flex: 1;
+      min-width: 80px;
+      padding: 0.75rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .action-btn:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(168, 85, 247, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .action-btn .icon {
+      font-size: 1.25rem;
+    }
+
+    /* Toast notifications */
+    .toast-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 1000;
+    }
+
+    .toast {
+      padding: 1rem 1.5rem;
+      background: rgba(18, 18, 26, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: white;
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      animation: slideIn 0.3s ease;
+    }
+
+    .toast.success {
+      border-left: 3px solid #22c55e;
+    }
+
+    .toast.error {
+      border-left: 3px solid #ef4444;
+    }
+
+    .toast.info {
+      border-left: 3px solid #6366f1;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 768px) {
       .dashboard-container {
-        min-height: 100vh;
-        padding: 2rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding-top: 100px;
+        padding: 1rem;
+        padding-top: 80px;
       }
 
-      .dashboard-card {
-        background: rgba(255, 255, 255, 0.03);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 24px;
-        padding: 3rem;
-        max-width: 600px;
-        width: 100%;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      .chains-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
 
-      .dashboard-header {
-        text-align: center;
-        margin-bottom: 2.5rem;
+      .portfolio-value {
+        font-size: 1.5rem;
       }
+    }
+  </style>
+</head>
 
-      .welcome-title {
-        font-size: 2rem;
-        font-weight: 700;
-        background: linear-gradient(135deg, #a855f7, #6366f1, #3b82f6);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 0.5rem;
-      }
+<body class="auth-page">
+  <div class="page-gradient"></div>
 
-      .welcome-subtitle {
-        color: rgba(255, 255, 255, 0.6);
-        font-size: 1rem;
-      }
+  <header class="auth-header">
+    <a href="index.html" class="auth-logo">
+      <span class="logo-mark"></span>
+      <span class="logo-text">Nebula Core</span>
+    </a>
+  </header>
 
-      .user-avatar {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #a855f7, #6366f1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: white;
-        margin: 0 auto 1.5rem;
-        box-shadow: 0 10px 40px rgba(168, 85, 247, 0.3);
-      }
+  <main class="dashboard-container">
+    <!-- Profile Card -->
+    <div class="dashboard-card">
+      <div id="loadingState" class="loading-state">
+        <div class="loading-spinner"></div>
+        <p>Loading your profile...</p>
+      </div>
 
-      .profile-info {
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 16px;
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-      }
-
-      .info-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      }
-
-      .info-row:last-child {
-        border-bottom: none;
-      }
-
-      .info-label {
-        color: rgba(255, 255, 255, 0.5);
-        font-size: 0.875rem;
-        font-weight: 500;
-      }
-
-      .info-value {
-        color: rgba(255, 255, 255, 0.9);
-        font-weight: 600;
-      }
-
-      .dashboard-actions {
-        display: flex;
-        gap: 1rem;
-        flex-wrap: wrap;
-      }
-
-      .dashboard-btn {
-        flex: 1;
-        min-width: 140px;
-        padding: 1rem 1.5rem;
-        border-radius: 12px;
-        font-weight: 600;
-        font-size: 0.9rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-      }
-
-      .btn-primary {
-        background: linear-gradient(135deg, #a855f7, #6366f1);
-        border: none;
-        color: white;
-      }
-
-      .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4);
-      }
-
-      .btn-secondary {
-        background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: rgba(255, 255, 255, 0.8);
-      }
-
-      .btn-secondary:hover {
-        background: rgba(255, 255, 255, 0.05);
-        border-color: rgba(255, 255, 255, 0.2);
-      }
-
-      .btn-danger {
-        background: rgba(239, 68, 68, 0.1);
-        border: 1px solid rgba(239, 68, 68, 0.3);
-        color: #ef4444;
-      }
-
-      .btn-danger:hover {
-        background: rgba(239, 68, 68, 0.2);
-      }
-
-      .loading-state {
-        text-align: center;
-        padding: 2rem;
-        color: rgba(255, 255, 255, 0.6);
-      }
-
-      .loading-spinner {
-        width: 40px;
-        height: 40px;
-        border: 3px solid rgba(255, 255, 255, 0.1);
-        border-top-color: #a855f7;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        margin: 0 auto 1rem;
-      }
-
-      @keyframes spin {
-        to { transform: rotate(360deg); }
-      }
-
-      .status-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.25rem 0.75rem;
-        background: rgba(34, 197, 94, 0.1);
-        border: 1px solid rgba(34, 197, 94, 0.3);
-        color: #22c55e;
-        border-radius: 20px;
-        font-size: 0.75rem;
-        font-weight: 600;
-      }
-
-      .status-dot {
-        width: 6px;
-        height: 6px;
-        background: #22c55e;
-        border-radius: 50%;
-        animation: pulse 2s infinite;
-      }
-
-      @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
-      }
-    </style>
-  </head>
-  <body class="auth-page">
-    <div class="page-gradient"></div>
-    
-    <header class="auth-header">
-      <a href="index.html" class="auth-logo">
-        <span class="logo-mark"></span>
-        <span class="logo-text">Nebula Core</span>
-      </a>
-    </header>
-
-    <main class="dashboard-container">
-      <div class="dashboard-card">
-        <div id="loadingState" class="loading-state">
-          <div class="loading-spinner"></div>
-          <p>Loading your profile...</p>
+      <div id="dashboardContent" style="display: none;">
+        <div class="dashboard-header">
+          <div class="user-avatar" id="userAvatar">U</div>
+          <h1 class="welcome-title">Welcome back, <span id="userName">User</span>!</h1>
+          <p class="welcome-subtitle">Your account is active and secure</p>
         </div>
 
-        <div id="dashboardContent" style="display: none;">
-          <div class="dashboard-header">
-            <div class="user-avatar" id="userAvatar">U</div>
-            <h1 class="welcome-title">Welcome back, <span id="userName">User</span>!</h1>
-            <p class="welcome-subtitle">Your account is active and secure</p>
+        <div class="profile-info">
+          <div class="info-row">
+            <span class="info-label">Full Name</span>
+            <span class="info-value" id="profileName">-</span>
           </div>
+          <div class="info-row">
+            <span class="info-label">Email Address</span>
+            <span class="info-value" id="profileEmail">-</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Account Status</span>
+            <span class="status-badge">
+              <span class="status-dot"></span>
+              Active
+            </span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Member Since</span>
+            <span class="info-value" id="profileCreated">-</span>
+          </div>
+        </div>
 
-          <div class="profile-info">
-            <div class="info-row">
-              <span class="info-label">Full Name</span>
-              <span class="info-value" id="profileName">-</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Email Address</span>
-              <span class="info-value" id="profileEmail">-</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Account Status</span>
-              <span class="status-badge">
-                <span class="status-dot"></span>
-                Active
-              </span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Member Since</span>
-              <span class="info-value" id="profileCreated">-</span>
-            </div>
-          </div>
-
-          <div class="dashboard-actions">
-            <button class="dashboard-btn btn-primary" onclick="window.location.href='index.html'">
-              <span>🏠</span>
-              <span>Home</span>
-            </button>
-            <button class="dashboard-btn btn-danger" onclick="handleLogout()">
-              <span>🚪</span>
-              <span>Sign Out</span>
-            </button>
-          </div>
+        <div class="dashboard-actions">
+          <button class="dashboard-btn btn-primary" onclick="window.location.href='index.html'">
+            <span>🏠</span>
+            <span>Home</span>
+          </button>
+          <button class="dashboard-btn btn-danger" onclick="handleLogout()">
+            <span>🚪</span>
+            <span>Sign Out</span>
+          </button>
         </div>
       </div>
-    </main>
+    </div>
 
-    <script>
-      // Check authentication and load user data
-      async function loadDashboard() {
-        const token = localStorage.getItem('token');
-        
-        if (!token) {
-          window.location.href = 'login.html';
-          return;
-        }
+    <!-- Web3 Crypto Portfolio Card -->
+    <div class="dashboard-card" id="web3Section">
+      <div class="section-title">
+        <h2>⛓️ Crypto Portfolio</h2>
+        <button id="connectWalletBtn" class="wallet-connect-btn" onclick="connectWallet()">
+          🔗 Connect Wallet
+        </button>
+      </div>
 
-        try {
-          const response = await fetch(`/api/auth/verify?token=${token}`);
-          const data = await response.json();
+      <!-- Not Connected State -->
+      <div id="walletNotConnected" class="not-connected-msg">
+        <div class="icon">🔐</div>
+        <p>Connect your wallet to view your multi-chain portfolio</p>
+      </div>
 
-          if (data.valid && data.user) {
-            displayUserData(data.user);
-          } else {
-            localStorage.removeItem('token');
-            window.location.href = 'login.html';
-          }
-        } catch (error) {
-          console.error('Error loading dashboard:', error);
-          // Show content anyway with stored data if available
-          document.getElementById('loadingState').style.display = 'none';
-          document.getElementById('dashboardContent').style.display = 'block';
-        }
+      <!-- Connected State -->
+      <div id="walletConnected" class="hidden">
+        <div class="portfolio-header">
+          <div>
+            <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 0.25rem;">Total Portfolio Value
+            </div>
+            <div id="totalValue" class="portfolio-value">$0.00</div>
+          </div>
+          <div style="text-align: right;">
+            <div style="color: rgba(255,255,255,0.5); font-size: 0.75rem;">Connected Wallet</div>
+            <div id="walletAddress" style="font-family: monospace; color: #22d3ee; cursor: pointer;"
+              onclick="copyAddress()">0x0000...0000</div>
+          </div>
+        </div>
+
+        <!-- Chain Balances Grid -->
+        <div class="chains-grid">
+          <div class="chain-card" data-chain="1" onclick="switchChain(1)">
+            <div class="chain-icon">◆</div>
+            <div class="chain-name">Ethereum</div>
+            <div class="chain-balance" id="balance-1"><span class="amount">--</span> ETH</div>
+          </div>
+          <div class="chain-card" data-chain="10" onclick="switchChain(10)">
+            <div class="chain-icon">🔴</div>
+            <div class="chain-name">Optimism</div>
+            <div class="chain-balance" id="balance-10"><span class="amount">--</span> ETH</div>
+          </div>
+          <div class="chain-card" data-chain="42161" onclick="switchChain(42161)">
+            <div class="chain-icon">🔵</div>
+            <div class="chain-name">Arbitrum</div>
+            <div class="chain-balance" id="balance-42161"><span class="amount">--</span> ETH</div>
+          </div>
+          <div class="chain-card" data-chain="43114" onclick="switchChain(43114)">
+            <div class="chain-icon">🔺</div>
+            <div class="chain-name">Avalanche</div>
+            <div class="chain-balance" id="balance-43114"><span class="amount">--</span> AVAX</div>
+          </div>
+          <div class="chain-card" data-chain="137" onclick="switchChain(137)">
+            <div class="chain-icon">🟣</div>
+            <div class="chain-name">Polygon</div>
+            <div class="chain-balance" id="balance-137"><span class="amount">--</span> MATIC</div>
+          </div>
+          <div class="chain-card" data-chain="8453" onclick="switchChain(8453)">
+            <div class="chain-icon">🔷</div>
+            <div class="chain-name">Base</div>
+            <div class="chain-balance" id="balance-8453"><span class="amount">--</span> ETH</div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions-row">
+          <button class="action-btn" onclick="showToast('Send feature coming soon!', 'info')">
+            <span class="icon">📤</span>
+            <span>Send</span>
+          </button>
+          <button class="action-btn" onclick="copyAddress()">
+            <span class="icon">📥</span>
+            <span>Receive</span>
+          </button>
+          <button class="action-btn" onclick="showToast('Swap feature coming soon!', 'info')">
+            <span class="icon">🔄</span>
+            <span>Swap</span>
+          </button>
+          <button class="action-btn" onclick="loadBalances()">
+            <span class="icon">🔃</span>
+            <span>Refresh</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Ethers.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.9.0/ethers.umd.min.js"></script>
+
+  <script>
+    // ===== User Auth Functions =====
+    async function loadDashboard() {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        window.location.href = 'login.html';
+        return;
       }
 
-      function displayUserData(user) {
+      try {
+        const response = await fetch(`/api/auth/verify?token=${token}`);
+        const data = await response.json();
+
+        if (data.valid && data.user) {
+          displayUserData(data.user);
+        } else {
+          localStorage.removeItem('token');
+          window.location.href = 'login.html';
+        }
+      } catch (error) {
+        console.error('Error loading dashboard:', error);
         document.getElementById('loadingState').style.display = 'none';
         document.getElementById('dashboardContent').style.display = 'block';
+      }
+    }
 
-        // Set user avatar (first letter of name)
-        const initial = user.name ? user.name.charAt(0).toUpperCase() : 'U';
-        document.getElementById('userAvatar').textContent = initial;
+    function displayUserData(user) {
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('dashboardContent').style.display = 'block';
 
-        // Set user name
-        const firstName = user.name ? user.name.split(' ')[0] : 'User';
-        document.getElementById('userName').textContent = firstName;
+      const initial = user.name ? user.name.charAt(0).toUpperCase() : 'U';
+      document.getElementById('userAvatar').textContent = initial;
 
-        // Set profile info
-        document.getElementById('profileName').textContent = user.name || '-';
-        document.getElementById('profileEmail').textContent = user.email || '-';
+      const firstName = user.name ? user.name.split(' ')[0] : 'User';
+      document.getElementById('userName').textContent = firstName;
 
-        // Format and set creation date (if available)
-        if (user.created_at) {
-          const date = new Date(user.created_at);
-          document.getElementById('profileCreated').textContent = date.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          });
-        }
+      document.getElementById('profileName').textContent = user.name || '-';
+      document.getElementById('profileEmail').textContent = user.email || '-';
+
+      if (user.created_at) {
+        const date = new Date(user.created_at);
+        document.getElementById('profileCreated').textContent = date.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+      }
+    }
+
+    async function handleLogout() {
+      const token = localStorage.getItem('token');
+
+      try {
+        await fetch('/api/auth/logout', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+      } catch (error) {
+        console.error('Logout error:', error);
       }
 
-      async function handleLogout() {
-        const token = localStorage.getItem('token');
-        
+      localStorage.removeItem('token');
+      window.location.href = 'login.html';
+    }
+
+    // ===== Web3 Functions =====
+    const CHAINS = {
+      1: { name: 'Ethereum', symbol: 'ETH', rpc: 'https://cloudflare-eth.com' },
+      10: { name: 'Optimism', symbol: 'ETH', rpc: 'https://mainnet.optimism.io' },
+      42161: { name: 'Arbitrum', symbol: 'ETH', rpc: 'https://arb1.arbitrum.io/rpc' },
+      43114: { name: 'Avalanche', symbol: 'AVAX', rpc: 'https://api.avax.network/ext/bc/C/rpc' },
+      137: { name: 'Polygon', symbol: 'MATIC', rpc: 'https://polygon-rpc.com' },
+      8453: { name: 'Base', symbol: 'ETH', rpc: 'https://mainnet.base.org' }
+    };
+
+    let walletAddress = null;
+    let currentChainId = null;
+
+    async function connectWallet() {
+      if (typeof window.ethereum === 'undefined') {
+        showToast('Please install MetaMask', 'error');
+        window.open('https://metamask.io/download/', '_blank');
+        return;
+      }
+
+      try {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        walletAddress = accounts[0];
+
+        const chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
+        currentChainId = parseInt(chainIdHex, 16);
+
+        updateWalletUI();
+        loadBalances();
+        showToast('Wallet connected!', 'success');
+
+        // Listen for account/chain changes
+        window.ethereum.on('accountsChanged', (accounts) => {
+          if (accounts.length === 0) {
+            disconnectWallet();
+          } else {
+            walletAddress = accounts[0];
+            updateWalletUI();
+            loadBalances();
+          }
+        });
+
+        window.ethereum.on('chainChanged', (chainId) => {
+          currentChainId = parseInt(chainId, 16);
+          updateActiveChain();
+        });
+
+      } catch (error) {
+        console.error('Connection error:', error);
+        showToast('Failed to connect wallet', 'error');
+      }
+    }
+
+    function disconnectWallet() {
+      walletAddress = null;
+      currentChainId = null;
+      document.getElementById('walletNotConnected').classList.remove('hidden');
+      document.getElementById('walletConnected').classList.add('hidden');
+      document.getElementById('connectWalletBtn').innerHTML = '🔗 Connect Wallet';
+      document.getElementById('connectWalletBtn').classList.remove('connected');
+      showToast('Wallet disconnected', 'info');
+    }
+
+    function updateWalletUI() {
+      document.getElementById('walletNotConnected').classList.add('hidden');
+      document.getElementById('walletConnected').classList.remove('hidden');
+
+      const shortAddr = `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`;
+      document.getElementById('walletAddress').textContent = shortAddr;
+
+      const btn = document.getElementById('connectWalletBtn');
+      btn.innerHTML = `<span class="wallet-dot"></span> ${shortAddr}`;
+      btn.classList.add('connected');
+      btn.onclick = disconnectWallet;
+
+      updateActiveChain();
+    }
+
+    function updateActiveChain() {
+      document.querySelectorAll('.chain-card').forEach(card => {
+        const chainId = parseInt(card.dataset.chain);
+        card.classList.toggle('active', chainId === currentChainId);
+      });
+    }
+
+    async function loadBalances() {
+      if (!walletAddress) return;
+
+      let totalUsd = 0;
+      const prices = { ETH: 2000, AVAX: 30, MATIC: 0.90 };
+
+      for (const [chainId, chain] of Object.entries(CHAINS)) {
         try {
-          await fetch('/api/auth/logout', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
-            }
-          });
-        } catch (error) {
-          console.error('Logout error:', error);
-        }
+          const provider = new ethers.JsonRpcProvider(chain.rpc);
+          const balance = await provider.getBalance(walletAddress);
+          const formatted = parseFloat(ethers.formatEther(balance)).toFixed(4);
 
-        localStorage.removeItem('token');
-        window.location.href = 'login.html';
+          const el = document.getElementById(`balance-${chainId}`);
+          if (el) {
+            el.innerHTML = `<span class="amount">${formatted}</span> ${chain.symbol}`;
+          }
+
+          totalUsd += parseFloat(formatted) * (prices[chain.symbol] || 0);
+        } catch (e) {
+          console.error(`Error loading balance for chain ${chainId}:`, e);
+        }
       }
 
-      // Load dashboard on page load
-      document.addEventListener('DOMContentLoaded', loadDashboard);
-    </script>
-  </body>
+      document.getElementById('totalValue').textContent = `$${totalUsd.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+
+    async function switchChain(chainId) {
+      if (!window.ethereum) return;
+
+      try {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0x' + chainId.toString(16) }]
+        });
+      } catch (error) {
+        if (error.code === 4902) {
+          showToast('Please add this network to your wallet', 'info');
+        } else {
+          console.error('Switch chain error:', error);
+        }
+      }
+    }
+
+    function copyAddress() {
+      if (walletAddress) {
+        navigator.clipboard.writeText(walletAddress);
+        showToast('Address copied!', 'success');
+      }
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `<span>${type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ'}</span> ${message}`;
+      container.appendChild(toast);
+
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      loadDashboard();
+
+      // Check if wallet was previously connected
+      if (window.ethereum && window.ethereum.selectedAddress) {
+        walletAddress = window.ethereum.selectedAddress;
+        window.ethereum.request({ method: 'eth_chainId' }).then(chainId => {
+          currentChainId = parseInt(chainId, 16);
+          updateWalletUI();
+          loadBalances();
+        });
+      }
+    });
+  </script>
+</body>
+
 </html>
