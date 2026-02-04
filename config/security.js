@@ -9,17 +9,17 @@ module.exports = {
         // General request rate limiting
         general: {
             windowMs: 15 * 60 * 1000, // 15 minutes
-            maxRequests: 100, // Max 100 requests per window
+            maxRequests: 500, // Max 500 requests per window (dev-friendly)
         },
-        // Stricter limits for authentication endpoints
+        // Limits for authentication endpoints
         auth: {
             windowMs: 15 * 60 * 1000, // 15 minutes
-            maxRequests: 5, // Max 5 login/signup attempts per window
+            maxRequests: 50, // Max 50 login/signup attempts per window
         },
         // API endpoint limits
         api: {
             windowMs: 1 * 60 * 1000, // 1 minute
-            maxRequests: 30, // Max 30 API calls per minute
+            maxRequests: 100, // Max 100 API calls per minute
         },
     },
 
