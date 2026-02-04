@@ -1,0 +1,582 @@
+/**
+ * Web3 Dashboard Styles - Premium Glassmorphism Design
+ */
+
+/* ===== CSS Variables ===== */
+:root {
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #12121a;
+    --bg-card: rgba(255, 255, 255, 0.03);
+    --bg-card-hover: rgba(255, 255, 255, 0.06);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-glow: rgba(168, 85, 247, 0.3);
+    --text-primary: rgba(255, 255, 255, 0.95);
+    --text-secondary: rgba(255, 255, 255, 0.6);
+    --text-muted: rgba(255, 255, 255, 0.4);
+    --accent-purple: #a855f7;
+    --accent-blue: #6366f1;
+    --accent-cyan: #22d3ee;
+    --success: #22c55e;
+    --error: #ef4444;
+    --warning: #f59e0b;
+
+    /* Chain Colors */
+    --chain-eth: #627EEA;
+    --chain-op: #FF0420;
+    --chain-arb: #28A0F0;
+    --chain-avax: #E84142;
+    --chain-matic: #8247E5;
+    --chain-base: #0052FF;
+}
+
+/* ===== Dashboard Layout ===== */
+.dashboard-layout {
+    min-height: 100vh;
+    background: var(--bg-primary);
+    padding: 1.5rem;
+    padding-top: 80px;
+}
+
+.dashboard-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* ===== Header ===== */
+.dashboard-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+}
+
+.logo-icon {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.logo-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ===== Connect Wallet Button ===== */
+.connect-wallet-btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+    border: none;
+    color: white;
+}
+
+.connect-wallet-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4);
+}
+
+.connect-wallet-btn.connected {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+}
+
+.connect-wallet-btn.connected:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-purple);
+}
+
+.wallet-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-muted);
+}
+
+.wallet-dot.connected {
+    background: var(--success);
+    animation: pulse 2s infinite;
+}
+
+.btn-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+/* ===== Dashboard Grid ===== */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===== Cards ===== */
+.glass-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.card-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ===== Wallet Card ===== */
+.wallet-card {
+    text-align: center;
+}
+
+.wallet-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3);
+}
+
+.wallet-address {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.wallet-address:hover {
+    color: var(--accent-purple);
+}
+
+.chain-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.75rem;
+}
+
+.not-connected-state {
+    padding: 2rem;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.not-connected-state .icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ===== Portfolio Card ===== */
+.portfolio-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff, var(--accent-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+}
+
+.portfolio-change {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.75rem;
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--success);
+    font-weight: 600;
+}
+
+/* ===== Chain Cards Grid ===== */
+.chains-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.chain-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.chain-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--chain-color, var(--accent-purple));
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.chain-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--chain-color, var(--accent-purple));
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.chain-card:hover::before {
+    opacity: 1;
+}
+
+.chain-card.active {
+    border-color: var(--chain-color, var(--accent-purple));
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.chain-card.active::before {
+    opacity: 1;
+}
+
+.chain-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.chain-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.chain-balance {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.chain-balance .balance-amount {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.chain-balance .balance-symbol {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    margin-left: 0.25rem;
+}
+
+.balance-loader {
+    display: inline-block;
+    width: 60px;
+    height: 16px;
+    background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-card-hover) 50%, var(--bg-card) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+}
+
+/* Chain-specific colors */
+.chain-card[data-chain="1"] {
+    --chain-color: var(--chain-eth);
+}
+
+.chain-card[data-chain="10"] {
+    --chain-color: var(--chain-op);
+}
+
+.chain-card[data-chain="42161"] {
+    --chain-color: var(--chain-arb);
+}
+
+.chain-card[data-chain="43114"] {
+    --chain-color: var(--chain-avax);
+}
+
+.chain-card[data-chain="137"] {
+    --chain-color: var(--chain-matic);
+}
+
+.chain-card[data-chain="8453"] {
+    --chain-color: var(--chain-base);
+}
+
+/* ===== Quick Actions ===== */
+.quick-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    flex: 1;
+    min-width: 100px;
+    padding: 1rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+.action-btn:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-purple);
+    transform: translateY(-2px);
+}
+
+.action-btn .icon {
+    font-size: 1.25rem;
+}
+
+/* ===== Wallet Menu ===== */
+.wallet-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 0.5rem;
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    z-index: 200;
+}
+
+.wallet-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.wallet-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+
+.wallet-menu-item:hover {
+    background: var(--bg-card);
+    color: var(--text-primary);
+}
+
+.wallet-menu-item.danger {
+    color: var(--error);
+}
+
+.wallet-menu-item.danger:hover {
+    background: rgba(239, 68, 68, 0.1);
+}
+
+/* ===== Toast Notifications ===== */
+.toast-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0.75rem;
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.toast-success {
+    border-left: 3px solid var(--success);
+}
+
+.toast-error {
+    border-left: 3px solid var(--error);
+}
+
+.toast-info {
+    border-left: 3px solid var(--accent-blue);
+}
+
+.toast-icon {
+    font-size: 1.1rem;
+}
+
+.toast-success .toast-icon {
+    color: var(--success);
+}
+
+.toast-error .toast-icon {
+    color: var(--error);
+}
+
+.toast-info .toast-icon {
+    color: var(--accent-blue);
+}
+
+/* ===== Animations ===== */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .dashboard-layout {
+        padding: 1rem;
+        padding-top: 70px;
+    }
+
+    .dashboard-header {
+        padding: 0.75rem 1rem;
+    }
+
+    .logo-text {
+        display: none;
+    }
+
+    .portfolio-value {
+        font-size: 2rem;
+    }
+
+    .chains-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .toast-container {
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+    }
+}

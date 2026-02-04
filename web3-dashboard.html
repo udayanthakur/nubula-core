@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multi-Chain Dashboard – Nebula Core</title>
+    <meta name="description"
+        content="Manage your Web3 portfolio across multiple chains with Nebula Core's Multi-Chain Dashboard" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="public/css/web3-dashboard.css" />
+</head>
+
+<body class="dashboard-layout">
+    <!-- Header -->
+    <header class="dashboard-header">
+        <a href="index.html" class="header-logo">
+            <div class="logo-icon">🌌</div>
+            <span class="logo-text">Nebula Core</span>
+        </a>
+        <div style="position: relative;">
+            <button id="connectWalletBtn" class="connect-wallet-btn" onclick="dashboard.connectWallet()">
+                🔗 Connect Wallet
+            </button>
+            <div id="walletMenu" class="wallet-menu">
+                <div class="wallet-menu-item" onclick="dashboard.copyAddress()">
+                    <span>📋</span> Copy Address
+                </div>
+                <div class="wallet-menu-item" onclick="dashboard.openExplorer()">
+                    <span>🔍</span> View on Explorer
+                </div>
+                <div class="wallet-menu-item danger" onclick="dashboard.disconnectWallet()">
+                    <span>🚪</span> Disconnect
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard -->
+    <main class="dashboard-container">
+        <div class="dashboard-grid">
+            <!-- Left Column - Wallet & Actions -->
+            <div class="left-column">
+                <!-- Wallet Card -->
+                <div class="glass-card wallet-card">
+                    <div class="card-header">
+                        <span class="card-title">Wallet</span>
+                    </div>
+
+                    <!-- Not Connected State -->
+                    <div id="notConnectedState" class="not-connected-state">
+                        <div class="icon">🔗</div>
+                        <p>Connect your wallet to view your portfolio</p>
+                        <button class="connect-wallet-btn" style="margin-top: 1rem;"
+                            onclick="dashboard.connectWallet()">
+                            Connect Wallet
+                        </button>
+                    </div>
+
+                    <!-- Connected State -->
+                    <div id="connectedState" class="hidden">
+                        <div id="walletAvatar" class="wallet-avatar">👤</div>
+                        <div id="walletAddress" class="wallet-address" onclick="dashboard.copyAddress()">0x0000...0000
+                        </div>
+                        <div id="currentChainBadge" class="chain-badge">
+                            <span>◆</span> Ethereum
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="glass-card" style="margin-top: 1.5rem;">
+                    <div class="card-header">
+                        <span class="card-title">Quick Actions</span>
+                    </div>
+                    <div class="quick-actions">
+                        <button class="action-btn" onclick="alert('Send feature coming soon!')">
+                            <span class="icon">📤</span>
+                            <span>Send</span>
+                        </button>
+                        <button class="action-btn" onclick="dashboard.copyAddress()">
+                            <span class="icon">📥</span>
+                            <span>Receive</span>
+                        </button>
+                        <button class="action-btn" onclick="alert('Swap feature coming soon!')">
+                            <span class="icon">🔄</span>
+                            <span>Swap</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Portfolio & Chains -->
+            <div class="right-column">
+                <!-- Portfolio Overview -->
+                <div class="glass-card">
+                    <div class="card-header">
+                        <span class="card-title">Portfolio Overview</span>
+                        <button class="action-btn" style="padding: 0.5rem 1rem; min-width: auto;"
+                            onclick="dashboard.loadAllBalances()">
+                            🔄 Refresh
+                        </button>
+                    </div>
+                    <div id="totalPortfolioValue" class="portfolio-value">$0.00</div>
+                    <div class="portfolio-change">
+                        <span>▲</span> +0.00% (24h)
+                    </div>
+
+                    <!-- Chain Cards -->
+                    <div class="chains-grid">
+                        <!-- Ethereum -->
+                        <div class="chain-card" data-chain="1" onclick="dashboard.switchChain(1)">
+                            <div class="chain-icon">◆</div>
+                            <div class="chain-name">Ethereum</div>
+                            <div class="chain-balance" id="balance-1">
+                                <span class="balance-amount">--</span>
+                            </div>
+                        </div>
+
+                        <!-- Optimism -->
+                        <div class="chain-card" data-chain="10" onclick="dashboard.switchChain(10)">
+                            <div class="chain-icon">🔴</div>
+                            <div class="chain-name">Optimism</div>
+                            <div class="chain-balance" id="balance-10">
+                                <span class="balance-amount">--</span>
+                            </div>
+                        </div>
+
+                        <!-- Arbitrum -->
+                        <div class="chain-card" data-chain="42161" onclick="dashboard.switchChain(42161)">
+                            <div class="chain-icon">🔵</div>
+                            <div class="chain-name">Arbitrum</div>
+                            <div class="chain-balance" id="balance-42161">
+                                <span class="balance-amount">--</span>
+                            </div>
+                        </div>
+
+                        <!-- Avalanche -->
+                        <div class="chain-card" data-chain="43114" onclick="dashboard.switchChain(43114)">
+                            <div class="chain-icon">🔺</div>
+                            <div class="chain-name">Avalanche</div>
+                            <div class="chain-balance" id="balance-43114">
+                                <span class="balance-amount">--</span>
+                            </div>
+                        </div>
+
+                        <!-- Polygon -->
+                        <div class="chain-card" data-chain="137" onclick="dashboard.switchChain(137)">
+                            <div class="chain-icon">🟣</div>
+                            <div class="chain-name">Polygon</div>
+                            <div class="chain-balance" id="balance-137">
+                                <span class="balance-amount">--</span>
+                            </div>
+                        </div>
+
+                        <!-- Base -->
+                        <div class="chain-card" data-chain="8453" onclick="dashboard.switchChain(8453)">
+                            <div class="chain-icon">🔷</div>
+                            <div class="chain-name">Base</div>
+                            <div class="chain-balance" id="balance-8453">
+                                <span class="balance-amount">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Network Status -->
+                <div class="glass-card" style="margin-top: 1.5rem;">
+                    <div class="card-header">
+                        <span class="card-title">Network Status</span>
+                    </div>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 150px;">
+                            <div style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.25rem;">Security
+                                Layer</div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="color: var(--success);">●</span>
+                                <span style="color: var(--text-primary); font-weight: 600;">Active</span>
+                            </div>
+                        </div>
+                        <div style="flex: 1; min-width: 150px;">
+                            <div style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.25rem;">Firewall
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="color: var(--success);">●</span>
+                                <span style="color: var(--text-primary); font-weight: 600;">Protected</span>
+                            </div>
+                        </div>
+                        <div style="flex: 1; min-width: 150px;">
+                            <div style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.25rem;">DDoS
+                                Shield</div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="color: var(--success);">●</span>
+                                <span style="color: var(--text-primary); font-weight: 600;">Enabled</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.9.0/ethers.umd.min.js"></script>
+    <script src="public/js/web3Provider.js"></script>
+    <script src="public/js/dashboard.js"></script>
+
+    <!-- Click outside to close wallet menu -->
+    <script>
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('walletMenu');
+            const btn = document.getElementById('connectWalletBtn');
+            if (menu && !menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+
+</html>

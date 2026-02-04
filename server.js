@@ -37,6 +37,11 @@ app.get('/dashboard', (req, res) => {
   res.sendFile(path.join(__dirname, 'dashboard.html'));
 });
 
+// Web3 Multi-Chain Dashboard
+app.get('/web3-dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, 'web3-dashboard.html'));
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -50,7 +55,9 @@ async function startServer() {
     await db.init();
 
     const authRoutes = require('./routes/auth');
+    const web3Routes = require('./routes/web3');
     app.use('/api/auth', authRoutes);
+    app.use('/api/web3', web3Routes);
     console.log('✅ Routes initialized');
 
     app.listen(PORT, () => {
@@ -59,6 +66,7 @@ async function startServer() {
       console.log(`📊 Database initialized`);
       console.log(`📝 Login: http://localhost:${PORT}/login`);
       console.log(`📝 Signup: http://localhost:${PORT}/signup`);
+      console.log(`🌐 Web3 Dashboard: http://localhost:${PORT}/web3-dashboard`);
       console.log('='.repeat(50) + '\n');
     });
   } catch (error) {
