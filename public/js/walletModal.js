@@ -130,8 +130,10 @@ class WalletModal {
 
     async connectMetaMask() {
         if (typeof window.ethereum === 'undefined') {
-            this.showError('MetaMask not detected. Please install MetaMask.');
-            window.open('https://metamask.io/download/', '_blank');
+            this.showError('MetaMask not installed. Click to install →');
+            setTimeout(() => {
+                window.open('https://metamask.io/download/', '_blank');
+            }, 1500);
             return;
         }
 
@@ -153,46 +155,58 @@ class WalletModal {
             this.showSIWEPrompt();
         } catch (error) {
             console.error('MetaMask error:', error);
-            this.showError(error.message || 'Failed to connect MetaMask');
+            if (error.code === 4001) {
+                this.showError('Connection rejected by user');
+            } else {
+                this.showError(error.message || 'Failed to connect MetaMask');
+            }
         }
     }
 
     async connectWalletConnect() {
-        try {
-            this.showStatus('Initializing WalletConnect...');
+        // WalletConnect requires external SDK - show installation guide
+        this.showStatus('WalletConnect requires MetaMask on mobile...');
 
-            // Check if Web3Modal is available
+        // Check if on mobile
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+        if (isMobile) {
+            // On mobile, redirect to MetaMask app
+            this.showError('Opening MetaMask app...');
+            setTimeout(() => {
+                window.location.href = `https://metamask.app.link/dapp/${window.location.host}`;
+            }, 1000);
+        } else {
+            // On desktop without MetaMask, guide to install
             if (typeof window.ethereum !== 'undefined') {
-                // Fallback: Use MetaMask if WalletConnect SDK not loaded
-                this.showStatus('Opening wallet connection...');
-
-                // For simpler WalletConnect, we'll use the EIP-1193 provider
-                // In production, you'd load the full Web3Modal SDK
-                const accounts = await window.ethereum.request({
-                    method: 'eth_requestAccounts'
-                });
-
-                if (accounts.length > 0) {
-                    this.address = accounts[0];
-                    this.provider = window.ethereum;
-                    const chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
-                    this.chainId = parseInt(chainIdHex, 16);
-                    this.showSIWEPrompt();
+                // MetaMask is available, use it
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    if (accounts.length > 0) {
+                        this.address = accounts[0];
+                        this.provider = window.ethereum;
+                        const chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
+                        this.chainId = parseInt(chainIdHex, 16);
+                        this.showSIWEPrompt();
+                    }
+                } catch (error) {
+                    this.showError(error.message || 'Connection failed');
                 }
             } else {
-                this.showError('No Web3 provider found. Please install a wallet.');
+                this.showError('Install MetaMask to use WalletConnect on desktop');
+                setTimeout(() => {
+                    window.open('https://metamask.io/download/', '_blank');
+                }, 2000);
             }
-        } catch (error) {
-            console.error('WalletConnect error:', error);
-            this.showError(error.message || 'Failed to connect via WalletConnect');
         }
     }
 
     async connectCoinbase() {
-        // Coinbase Wallet also uses window.ethereum when installed
         if (typeof window.ethereum === 'undefined') {
-            this.showError('Coinbase Wallet not detected.');
-            window.open('https://www.coinbase.com/wallet', '_blank');
+            this.showError('Coinbase Wallet not installed. Click to install →');
+            setTimeout(() => {
+                window.open('https://www.coinbase.com/wallet', '_blank');
+            }, 1500);
             return;
         }
 
@@ -214,7 +228,11 @@ class WalletModal {
             this.showSIWEPrompt();
         } catch (error) {
             console.error('Coinbase error:', error);
-            this.showError(error.message || 'Failed to connect Coinbase Wallet');
+            if (error.code === 4001) {
+                this.showError('Connection rejected by user');
+            } else {
+                this.showError(error.message || 'Failed to connect Coinbase Wallet');
+            }
         }
     }
 
