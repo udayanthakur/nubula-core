@@ -3,6 +3,9 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 
+// Utilities
+const logger = require('./utils/logger');
+
 // Security middleware
 const { firewall } = require('./middleware/firewall');
 
@@ -44,7 +47,7 @@ app.get('/web3-dashboard', (req, res) => {
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  logger.error('Server error', { message: err.message, stack: err.stack });
   res.status(500).json({ message: 'Something went wrong!', error: err.message });
 });
 
@@ -60,19 +63,19 @@ async function startServer() {
     app.use('/api/auth', authRoutes);
     app.use('/api/auth/siwe', siweRoutes);
     app.use('/api/web3', web3Routes);
-    console.log('✅ Routes initialized (including SIWE)');
+    logger.success('Routes initialized (including SIWE)');
 
     app.listen(PORT, () => {
-      console.log('\n' + '='.repeat(50));
-      console.log(`🚀 Nebula Core server running on http://localhost:${PORT}`);
-      console.log(`📊 Database initialized`);
-      console.log(`📝 Login: http://localhost:${PORT}/login`);
-      console.log(`📝 Signup: http://localhost:${PORT}/signup`);
-      console.log(`🌐 Web3 Dashboard: http://localhost:${PORT}/web3-dashboard`);
-      console.log('='.repeat(50) + '\n');
+      logger.banner([
+        `🚀 Nebula Core server running on http://localhost:${PORT}`,
+        `📊 Database initialized`,
+        `📝 Login: http://localhost:${PORT}/login`,
+        `📝 Signup: http://localhost:${PORT}/signup`,
+        `🌐 Web3 Dashboard: http://localhost:${PORT}/web3-dashboard`,
+      ]);
     });
   } catch (error) {
-    console.error('❌ Failed to start server:', error);
+    logger.error('Failed to start server', { error: error.message });
     process.exit(1);
   }
 }
