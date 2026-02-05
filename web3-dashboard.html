@@ -205,7 +205,21 @@
     </main>
 
     <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.9.0/ethers.umd.min.js"></script>
+    <!-- Ethers.js v6 with fallback -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.9.0/dist/ethers.umd.min.js"></script>
+    <script>
+        // Ensure ethers is globally available
+        if (typeof ethers === 'undefined' && typeof window.ethers !== 'undefined') {
+            window.ethers = window.ethers;
+        }
+        if (typeof ethers === 'undefined') {
+            console.error('ethers.js failed to load');
+            // Try fallback CDN
+            const fallbackScript = document.createElement('script');
+            fallbackScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.9.0/ethers.umd.min.js';
+            document.head.appendChild(fallbackScript);
+        }
+    </script>
     <script src="public/js/web3Provider.js"></script>
     <script src="public/js/dashboard.js"></script>
 
