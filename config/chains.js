@@ -112,6 +112,63 @@ const CHAINS = {
         isTestnet: false,
     },
 
+    // Fantom Opera (Sonic)
+    250: {
+        id: 250,
+        name: 'Fantom',
+        shortName: 'FTM',
+        symbol: 'FTM',
+        decimals: 18,
+        rpcUrls: [
+            'https://rpc.ftm.tools',
+            'https://fantom.publicnode.com',
+            'https://rpc.ankr.com/fantom',
+        ],
+        blockExplorer: 'https://ftmscan.com',
+        color: '#1969FF',
+        logo: '👻',
+        isTestnet: false,
+        features: ['DAG-Based', 'aBFT Consensus', '10,000+ TPS', '90% Fee Share'],
+    },
+
+    // Tron Mainnet
+    728126428: {
+        id: 728126428,
+        name: 'Tron',
+        shortName: 'TRX',
+        symbol: 'TRX',
+        decimals: 6,
+        rpcUrls: [
+            'https://api.trongrid.io',
+            'https://rpc.ankr.com/tron_jsonrpc',
+        ],
+        blockExplorer: 'https://tronscan.org',
+        color: '#FF0013',
+        logo: '🔴',
+        isTestnet: false,
+        features: ['DPoS', 'Free Bandwidth', 'Stablecoin Hub', '27 Super Representatives'],
+        isTron: true, // Special flag for Tron-specific handling
+    },
+
+    // Cronos Mainnet
+    25: {
+        id: 25,
+        name: 'Cronos',
+        shortName: 'CRO',
+        symbol: 'CRO',
+        decimals: 18,
+        rpcUrls: [
+            'https://evm.cronos.org',
+            'https://cronos.publicnode.com',
+            'https://rpc.ankr.com/cronos',
+        ],
+        blockExplorer: 'https://cronoscan.com',
+        color: '#002D74',
+        logo: '💎',
+        isTestnet: false,
+        features: ['Cosmos SDK', 'IBC Interoperability', 'Tendermint Consensus'],
+    },
+
     // Sepolia Testnet (for development)
     11155111: {
         id: 11155111,

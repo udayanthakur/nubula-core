@@ -571,6 +571,21 @@
             <div class="chain-name">Base</div>
             <div class="chain-balance" id="balance-8453"><span class="amount">--</span> ETH</div>
           </div>
+          <div class="chain-card" data-chain="250" onclick="switchChain(250)">
+            <div class="chain-icon">👻</div>
+            <div class="chain-name">Fantom</div>
+            <div class="chain-balance" id="balance-250"><span class="amount">--</span> FTM</div>
+          </div>
+          <div class="chain-card" data-chain="728126428" onclick="switchChain(728126428)">
+            <div class="chain-icon">🔴</div>
+            <div class="chain-name">Tron</div>
+            <div class="chain-balance" id="balance-728126428"><span class="amount">--</span> TRX</div>
+          </div>
+          <div class="chain-card" data-chain="25" onclick="switchChain(25)">
+            <div class="chain-icon">💎</div>
+            <div class="chain-name">Cronos</div>
+            <div class="chain-balance" id="balance-25"><span class="amount">--</span> CRO</div>
+          </div>
         </div>
 
         <!-- Quick Actions -->
@@ -677,7 +692,10 @@
       42161: { name: 'Arbitrum', symbol: 'ETH', rpc: 'https://arb1.arbitrum.io/rpc' },
       43114: { name: 'Avalanche', symbol: 'AVAX', rpc: 'https://api.avax.network/ext/bc/C/rpc' },
       137: { name: 'Polygon', symbol: 'MATIC', rpc: 'https://polygon-rpc.com' },
-      8453: { name: 'Base', symbol: 'ETH', rpc: 'https://mainnet.base.org' }
+      8453: { name: 'Base', symbol: 'ETH', rpc: 'https://mainnet.base.org' },
+      250: { name: 'Fantom', symbol: 'FTM', rpc: 'https://rpc.ftm.tools' },
+      728126428: { name: 'Tron', symbol: 'TRX', rpc: 'https://api.trongrid.io', isTron: true },
+      25: { name: 'Cronos', symbol: 'CRO', rpc: 'https://evm.cronos.org' }
     };
 
     let walletAddress = null;
