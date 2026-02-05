@@ -3,7 +3,22 @@
  * Handles wallet connection, provider management, and blockchain interactions
  */
 
-// Chain configuration (loaded inline for browser)
+// Wait for ethers.js to be available
+if (typeof ethers === 'undefined') {
+    console.error('ethers.js is not loaded. Web3 features will not work.');
+    window.ethersNotLoaded = true;
+} else {
+    window.ethersNotLoaded = false;
+}
+
+// Helper function to check ethers availability
+function requireEthers() {
+    if (typeof ethers === 'undefined') {
+        throw new Error('ethers.js is not loaded. Please refresh the page.');
+    }
+    return ethers;
+}
+
 const CHAINS = {
     1: { id: 1, name: 'Ethereum', symbol: 'ETH', decimals: 18, rpcUrls: ['https://cloudflare-eth.com', 'https://eth.llamarpc.com'], blockExplorer: 'https://etherscan.io', color: '#627EEA', logo: '◆' },
     10: { id: 10, name: 'Optimism', symbol: 'ETH', decimals: 18, rpcUrls: ['https://mainnet.optimism.io', 'https://optimism.llamarpc.com'], blockExplorer: 'https://optimistic.etherscan.io', color: '#FF0420', logo: '🔴' },

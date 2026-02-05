@@ -205,23 +205,61 @@
     </main>
 
     <!-- Scripts -->
-    <!-- Ethers.js v6 with fallback -->
-    <script src="https://cdn.jsdelivr.net/npm/ethers@6.9.0/dist/ethers.umd.min.js"></script>
+    <!-- Load ethers.js first, then load other scripts after it's ready -->
     <script>
-        // Ensure ethers is globally available
-        if (typeof ethers === 'undefined' && typeof window.ethers !== 'undefined') {
-            window.ethers = window.ethers;
+        // Load ethers.js dynamically with callback
+        function loadScript(src, onLoad) {
+            const script = document.createElement('script');
+            script.src = src;
+            script.onload = onLoad;
+            script.onerror = function () {
+                console.error('Failed to load:', src);
+            };
+            document.head.appendChild(script);
         }
-        if (typeof ethers === 'undefined') {
-            console.error('ethers.js failed to load');
-            // Try fallback CDN
-            const fallbackScript = document.createElement('script');
-            fallbackScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.9.0/ethers.umd.min.js';
-            document.head.appendChild(fallbackScript);
+
+        // CDN sources for ethers.js
+        const ethersCDNs = [
+            'https://cdn.jsdelivr.net/npm/ethers@6.9.0/dist/ethers.umd.min.js',
+            'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.9.0/ethers.umd.min.js',
+            'https://unpkg.com/ethers@6.9.0/dist/ethers.umd.min.js'
+        ];
+
+        let cdnIndex = 0;
+
+        function loadEthersFromCDN() {
+            if (cdnIndex >= ethersCDNs.length) {
+                console.error('All ethers.js CDNs failed to load');
+                return;
+            }
+
+            const script = document.createElement('script');
+            script.src = ethersCDNs[cdnIndex];
+            script.onload = function () {
+                if (typeof ethers !== 'undefined') {
+                    console.log('✅ ethers.js loaded from:', ethersCDNs[cdnIndex]);
+                    // Now load our scripts
+                    loadScript('public/js/web3Provider.js', function () {
+                        loadScript('public/js/dashboard.js', function () {
+                            console.log('✅ All Web3 scripts loaded');
+                        });
+                    });
+                } else {
+                    // Try next CDN
+                    cdnIndex++;
+                    loadEthersFromCDN();
+                }
+            };
+            script.onerror = function () {
+                cdnIndex++;
+                loadEthersFromCDN();
+            };
+            document.head.appendChild(script);
         }
+
+        // Start loading
+        loadEthersFromCDN();
     </script>
-    <script src="public/js/web3Provider.js"></script>
-    <script src="public/js/dashboard.js"></script>
 
     <!-- Click outside to close wallet menu -->
     <script>
