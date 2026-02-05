@@ -1,0 +1,251 @@
+/**
+ * Wallet Modal Styles - Premium Design
+ */
+
+.wallet-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.wallet-modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.wallet-modal {
+    background: linear-gradient(145deg, #1a1a2e, #16162a);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    width: 90%;
+    max-width: 420px;
+    transform: translateY(20px) scale(0.95);
+    transition: transform 0.3s ease;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+}
+
+.wallet-modal-overlay.show .wallet-modal {
+    transform: translateY(0) scale(1);
+}
+
+.wallet-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1.5rem 0;
+}
+
+.wallet-modal-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+}
+
+.wallet-modal-close {
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.wallet-modal-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.wallet-modal-body {
+    padding: 1.5rem;
+}
+
+.wallet-modal-subtitle {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.875rem;
+    margin-bottom: 1.25rem;
+    text-align: center;
+}
+
+.wallet-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.wallet-option {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    width: 100%;
+}
+
+.wallet-option:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(168, 85, 247, 0.5);
+    transform: translateX(4px);
+}
+
+.wallet-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.wallet-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.wallet-name {
+    font-weight: 600;
+    color: white;
+    font-size: 0.95rem;
+}
+
+.wallet-desc {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.wallet-arrow {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 1.25rem;
+    transition: transform 0.2s;
+}
+
+.wallet-option:hover .wallet-arrow {
+    transform: translateX(4px);
+    color: #a855f7;
+}
+
+/* Status */
+.wallet-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.wallet-status-spinner {
+    width: 24px;
+    height: 24px;
+    border: 2px solid rgba(168, 85, 247, 0.3);
+    border-top-color: #a855f7;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Error */
+.wallet-error {
+    padding: 1rem;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 12px;
+    color: #ef4444;
+    text-align: center;
+    font-size: 0.875rem;
+    margin-top: 1rem;
+}
+
+/* SIWE Prompt */
+.siwe-prompt {
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+.siwe-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.siwe-prompt h3 {
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.siwe-prompt p {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+}
+
+.siwe-sign-btn {
+    padding: 0.875rem 2rem;
+    background: linear-gradient(135deg, #a855f7, #6366f1);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.siwe-sign-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4);
+}
+
+/* Footer */
+.wallet-modal-footer {
+    padding: 1rem 1.5rem 1.5rem;
+    text-align: center;
+}
+
+.wallet-modal-footer p {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.wallet-modal-footer a {
+    color: #a855f7;
+    text-decoration: none;
+}
+
+.wallet-modal-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Utility */
+.hidden {
+    display: none !important;
+}

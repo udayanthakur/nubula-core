@@ -56,9 +56,11 @@ async function startServer() {
 
     const authRoutes = require('./routes/auth');
     const web3Routes = require('./routes/web3');
+    const siweRoutes = require('./routes/siwe');
     app.use('/api/auth', authRoutes);
+    app.use('/api/auth/siwe', siweRoutes);
     app.use('/api/web3', web3Routes);
-    console.log('✅ Routes initialized');
+    console.log('✅ Routes initialized (including SIWE)');
 
     app.listen(PORT, () => {
       console.log('\n' + '='.repeat(50));

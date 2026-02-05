@@ -29,8 +29,9 @@ async function init() {
     CREATE TABLE IF NOT EXISTS users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
-      email TEXT UNIQUE NOT NULL,
-      password TEXT NOT NULL,
+      email TEXT UNIQUE,
+      password TEXT,
+      wallet_address TEXT UNIQUE,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
@@ -50,10 +51,18 @@ async function init() {
   // Create indexes
   try {
     db.run(`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)`);
+    db.run(`CREATE INDEX IF NOT EXISTS idx_users_wallet ON users(wallet_address)`);
     db.run(`CREATE INDEX IF NOT EXISTS idx_sessions_token ON sessions(token)`);
     db.run(`CREATE INDEX IF NOT EXISTS idx_sessions_user_id ON sessions(user_id)`);
   } catch (e) {
     // Indexes may already exist
+  }
+
+  // Add wallet_address column if it doesn't exist (migration)
+  try {
+    db.run(`ALTER TABLE users ADD COLUMN wallet_address TEXT UNIQUE`);
+  } catch (e) {
+    // Column may already exist
   }
 
   console.log('✅ Database tables created/verified');
@@ -83,6 +92,16 @@ const users = {
     return { id: result[0].values[0][0], name, email };
   },
 
+  createWithWallet: (data) => {
+    const stmt = db.prepare(`INSERT INTO users (name, wallet_address) VALUES (?, ?)`);
+    stmt.run([data.name, data.wallet_address]);
+    stmt.free();
+    saveDatabase();
+
+    const result = db.exec(`SELECT last_insert_rowid() as id`);
+    return result[0].values[0][0];
+  },
+
   findByEmail: (email) => {
     const stmt = db.prepare(`SELECT * FROM users WHERE email = ?`);
     stmt.bind([email]);
@@ -96,7 +115,7 @@ const users = {
   },
 
   findById: (id) => {
-    const stmt = db.prepare(`SELECT id, name, email, created_at FROM users WHERE id = ?`);
+    const stmt = db.prepare(`SELECT id, name, email, wallet_address, created_at FROM users WHERE id = ?`);
     stmt.bind([id]);
     if (stmt.step()) {
       const row = stmt.getAsObject();
@@ -105,6 +124,24 @@ const users = {
     }
     stmt.free();
     return null;
+  },
+
+  findByWallet: (walletAddress) => {
+    const stmt = db.prepare(`SELECT id, name, email, wallet_address, created_at FROM users WHERE wallet_address = ?`);
+    stmt.bind([walletAddress.toLowerCase()]);
+    if (stmt.step()) {
+      const row = stmt.getAsObject();
+      stmt.free();
+      return row;
+    }
+    stmt.free();
+    return null;
+  },
+
+  linkWallet: (userId, walletAddress) => {
+    db.run(`UPDATE users SET wallet_address = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?`,
+      [walletAddress.toLowerCase(), userId]);
+    saveDatabase();
   },
 
   updatePassword: (id, password) => {

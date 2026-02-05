@@ -1,151 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign Up – Nebula Core</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="auth.css" />
-  </head>
-  <body class="auth-page">
-    <div class="page-gradient"></div>
-    
-    <header class="auth-header">
-      <a href="index.html" class="auth-logo">
-        <span class="logo-mark"></span>
-        <span class="logo-text">Nebula Core</span>
-      </a>
-    </header>
 
-    <main class="auth-container">
-      <div class="auth-card">
-        <div class="auth-card-header">
-          <h1 class="auth-title">Create account</h1>
-          <p class="auth-subtitle">Start building on decentralized crypto protocol</p>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up – Nebula Core</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="auth.css" />
+</head>
+
+<body class="auth-page">
+  <div class="page-gradient"></div>
+
+  <header class="auth-header">
+    <a href="index.html" class="auth-logo">
+      <span class="logo-mark"></span>
+      <span class="logo-text">Nebula Core</span>
+    </a>
+  </header>
+
+  <main class="auth-container">
+    <div class="auth-card">
+      <div class="auth-card-header">
+        <h1 class="auth-title">Create account</h1>
+        <p class="auth-subtitle">Start building on decentralized crypto protocol</p>
+      </div>
+
+      <form class="auth-form" id="signupForm">
+        <div class="form-group">
+          <label for="name" class="form-label">Full name</label>
+          <input type="text" id="name" name="name" class="form-input" placeholder="John Doe" required
+            autocomplete="name" />
+          <span class="input-glow"></span>
         </div>
 
-        <form class="auth-form" id="signupForm">
-          <div class="form-group">
-            <label for="name" class="form-label">Full name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              class="form-input"
-              placeholder="John Doe"
-              required
-              autocomplete="name"
-            />
+        <div class="form-group">
+          <label for="email" class="form-label">Email address</label>
+          <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" required
+            autocomplete="email" />
+          <span class="input-glow"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <div class="password-input-wrapper">
+            <input type="password" id="password" name="password" class="form-input"
+              placeholder="Create a strong password" required autocomplete="new-password" minlength="8" />
+            <button type="button" class="password-toggle" id="passwordToggle" aria-label="Toggle password visibility">
+              <span class="eye-icon">👁</span>
+            </button>
             <span class="input-glow"></span>
           </div>
+          <div class="password-strength" id="passwordStrength"></div>
+        </div>
 
-          <div class="form-group">
-            <label for="email" class="form-label">Email address</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              class="form-input"
-              placeholder="you@example.com"
-              required
-              autocomplete="email"
-            />
+        <div class="form-group">
+          <label for="confirmPassword" class="form-label">Confirm password</label>
+          <div class="password-input-wrapper">
+            <input type="password" id="confirmPassword" name="confirmPassword" class="form-input"
+              placeholder="Confirm your password" required autocomplete="new-password" />
+            <button type="button" class="password-toggle" id="confirmPasswordToggle"
+              aria-label="Toggle password visibility">
+              <span class="eye-icon">👁</span>
+            </button>
             <span class="input-glow"></span>
           </div>
+        </div>
 
-          <div class="form-group">
-            <label for="password" class="form-label">Password</label>
-            <div class="password-input-wrapper">
-              <input
-                type="password"
-                id="password"
-                name="password"
-                class="form-input"
-                placeholder="Create a strong password"
-                required
-                autocomplete="new-password"
-                minlength="8"
-              />
-              <button type="button" class="password-toggle" id="passwordToggle" aria-label="Toggle password visibility">
-                <span class="eye-icon">👁</span>
-              </button>
-              <span class="input-glow"></span>
-            </div>
-            <div class="password-strength" id="passwordStrength"></div>
-          </div>
+        <div class="form-options">
+          <label class="checkbox-label">
+            <input type="checkbox" name="terms" required />
+            <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+          </label>
+        </div>
 
-          <div class="form-group">
-            <label for="confirmPassword" class="form-label">Confirm password</label>
-            <div class="password-input-wrapper">
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                class="form-input"
-                placeholder="Confirm your password"
-                required
-                autocomplete="new-password"
-              />
-              <button type="button" class="password-toggle" id="confirmPasswordToggle" aria-label="Toggle password visibility">
-                <span class="eye-icon">👁</span>
-              </button>
-              <span class="input-glow"></span>
-            </div>
-          </div>
+        <button type="submit" class="btn auth-submit">
+          <span>Create account</span>
+          <span class="btn-icon">→</span>
+        </button>
 
-          <div class="form-options">
-            <label class="checkbox-label">
-              <input type="checkbox" name="terms" required />
-              <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
-            </label>
-          </div>
+        <div class="auth-divider">
+          <span>Or sign up with</span>
+        </div>
 
-          <button type="submit" class="btn auth-submit">
-            <span>Create account</span>
-            <span class="btn-icon">→</span>
+        <div class="social-login">
+          <button type="button" class="btn social-btn wallet-btn" onclick="openWalletModal()">
+            <span>🔗</span>
+            <span>Sign up with Wallet</span>
           </button>
-
-          <div class="auth-divider">
-            <span>Or sign up with</span>
-          </div>
-
-          <div class="social-login">
-            <button type="button" class="btn social-btn">
-              <span>🔷</span>
-              <span>Google</span>
-            </button>
-            <button type="button" class="btn social-btn">
-              <span>🔵</span>
-              <span>GitHub</span>
-            </button>
-          </div>
-
-          <p class="auth-footer">
-            Already have an account? <a href="login.html">Sign in</a>
-          </p>
-        </form>
-
-        <div class="auth-message" id="authMessage"></div>
-      </div>
-
-      <div class="auth-visual">
-        <div class="auth-cube-grid">
-          <div class="auth-cube cube-1"></div>
-          <div class="auth-cube cube-2"></div>
-          <div class="auth-cube cube-3"></div>
-          <div class="auth-cube cube-4"></div>
         </div>
+
+        <div class="auth-divider">
+          <span>Or continue with</span>
+        </div>
+
+        <div class="social-login">
+          <button type="button" class="btn social-btn">
+            <span>🔷</span>
+            <span>Google</span>
+          </button>
+          <button type="button" class="btn social-btn">
+            <span>🔵</span>
+            <span>GitHub</span>
+          </button>
+        </div>
+
+        <p class="auth-footer">
+          Already have an account? <a href="login.html">Sign in</a>
+        </p>
+      </form>
+
+      <div class="auth-message" id="authMessage"></div>
+    </div>
+
+    <div class="auth-visual">
+      <div class="auth-cube-grid">
+        <div class="auth-cube cube-1"></div>
+        <div class="auth-cube cube-2"></div>
+        <div class="auth-cube cube-3"></div>
+        <div class="auth-cube cube-4"></div>
       </div>
-    </main>
+    </div>
+  </main>
 
-    <script src="auth.js"></script>
-  </body>
+  <link rel="stylesheet" href="public/css/walletModal.css" />
+  <script src="public/js/walletModal.js"></script>
+  <script src="auth.js"></script>
+</body>
+
 </html>
-
-
